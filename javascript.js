@@ -101,3 +101,41 @@ function arrToList(array) {
   }
   return node.next
 }
+
+
+function bind(f, ...fixedArgs) {
+  return function(...args) {
+    return f(...fixedArgs, ...args)
+  }
+}
+
+function swap(ary, i, j) {
+  let temp = ary[i]
+  ary[i] = ary[j]
+  ary[j] = ary[i]
+}
+
+//快排
+function quickSprt(ary, start=0, end=ary.length-1) {
+  if (start >= end) {
+    return ary
+  }
+
+  let pivotIdx = Math.floor(Math.random() * (end - start +1) + start)
+  let pivot = ary[pivotIdx]
+
+  swap(ary, pivotIdx, end)
+  
+  let i = start
+  for (let j = start; j < end; j++) {
+    if (ary[i] < pivot) {
+      swap(ary, i++, j)
+    }
+  }
+  swap(ary, i, end)
+
+  quickSprt(ary, start, i-1)
+  quickSprt(ary, i+1, end)
+
+  return ary
+}
