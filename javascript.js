@@ -139,3 +139,51 @@ function quickSprt(ary, start=0, end=ary.length-1) {
 
   return ary
 }
+
+function quickSprtBy(ary, predicate = it => it, start=0, end=ary.length-1) {
+  if (start >= end) {
+    return ary
+  }
+
+  let pivotIdx = Math.floor(Math.random() * (end - start +1) + start)
+  let pivot = ary[pivotIdx]
+
+  swap(ary, pivotIdx, end)
+  
+  let i = start
+  for (let j = start; j < end; j++) {
+    if (predicate(ary[i]) < predicate(pivot)) {
+      swap(ary, i++, j)
+    }
+  }
+  swap(ary, i, end)
+
+  quickSprtBy(ary, predicate, start, i-1)
+  quickSprtBy(ary, predicate, i+1, end)
+
+  return ary
+}
+
+function quickSprtWith(ary, compare = (a, b) => a-b, start=0, end=ary.length-1) {
+  if (start >= end) {
+    return ary
+  }
+
+  let pivotIdx = Math.floor(Math.random() * (end - start +1) + start)
+  let pivot = ary[pivotIdx]
+
+  swap(ary, pivotIdx, end)
+  
+  let i = start
+  for (let j = start; j < end; j++) {
+    if (compare(ary[j], pivot) < 0) {
+      swap(ary, i++, j)
+    }
+  }
+  swap(ary, i, end)
+
+  quickSprtWith(ary, predicate, start, i-1)
+  quickSprtWith(ary, predicate, i+1, end)
+
+  return ary
+}
