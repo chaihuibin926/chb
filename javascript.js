@@ -187,3 +187,123 @@ function quickSprtWith(ary, compare = (a, b) => a-b, start=0, end=ary.length-1) 
 
   return ary
 }
+
+function mapValues(obj, mapper) {
+  let result = {}
+  for (let key in obj) {
+    let val = obj[key]
+    result[key] = mapper(val, key)
+  }
+  return result
+}
+
+function every(ary, predicare) {
+  for (let i = 0; i < ary.length; i++) {
+    if (!predicare(ary[i])) {
+      return false
+    }
+  }
+  return true
+}
+
+function some(ary, predicare) {
+  for (let i = 0; i < ary.length; i++) {
+    if (predicare(ary[i])) {
+      return true
+    }
+  }
+  return false
+}
+
+//反函数
+function invert(f) {
+  return function(...args) {
+    return !f(...args)
+  }
+}
+
+
+function createTreeNode(val) {
+  return {
+    val: val,
+    left: null,
+    right: null,
+  }
+}
+
+function aryToTree(array, rootPos = 0) {
+  if (ary[rootPos] == null) {
+    return null
+  }
+
+  let rootNode = createTreeNode(rootPos)
+  let leftPos = rootPos * 2 + 1
+  let rightPos = rootPos * 2 + 2
+  let leftTree = aryToTree(ary, leftPos)
+  let rightTree = aryToTree(ary, rightPos)
+
+  rootNode.left = leftTree 
+  rootNode.right = rightTree
+}
+
+
+function treeToAry(tree, index = 0, array = []) {
+  if (tree) {
+    array[index] = tree.val
+    treeToAry(tree.left, index * 2 + 2)
+    treeToAry(tree.right, index * 2 + 2)
+  }
+  return array
+}
+
+function condensedAryToTree(ary) {
+  let nodes = []
+  if (ary.length == 0) {
+    return null
+  }
+
+  nodes.push(createTreeNode(ary[0]))
+
+  for (let i = 1; i < ary.length; i++) {
+    let current = nodes.shift()
+    let node
+
+    if(ary[i] == null) {
+      node = null
+    } else {
+      let node = createTreeNode(ary[i])
+      nodes.push(node)
+    }
+    current.left = node
+
+    i++
+
+    if (ary[i] == null) {
+      node = null
+    } else {
+      let node = createTreeNode(ary[i])
+      nodes.push(node)
+    }
+    current.right = node
+  }
+}
+
+function treeToCondensedAry(root) {
+  if (root == null) {
+    return []
+  }
+  let nodes = [root]
+  let result = []
+
+  while (nodes.length) {
+    let current = nodes.shift()
+    if (current) {
+      result.push(current.val)
+      nodes.push(current.left, current.right)
+    } else {
+      result.push(null)
+    }
+  }
+
+  return result
+}
