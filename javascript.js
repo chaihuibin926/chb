@@ -308,6 +308,7 @@ function treeToCondensedAry(root) {
   return result
 }
 
+//action函数
 function preOrderTraverse(root, action) {
   if (root) {
     action(root.val)
