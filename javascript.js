@@ -307,3 +307,27 @@ function treeToCondensedAry(root) {
 
   return result
 }
+
+function preOrderTraverse(root, action) {
+  if (root) {
+    action(root.val)
+    preOrderTraverse(root.left, action)
+    preOrderTraverse(root.right, action)
+  }
+}
+
+function midpreOrderTraverse(root, action) {
+  if (root) {
+    preOrderTraverse(root.left, action)
+    action(root.val)
+    preOrderTraverse(root.right, action)
+  }
+}
+
+function postpreOrderTraverse(root, action) {
+  if (root) {
+    preOrderTraverse(root.left, action)
+    preOrderTraverse(root.right, action)
+    action(root.val)
+  }
+}
