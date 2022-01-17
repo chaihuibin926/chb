@@ -317,7 +317,7 @@ function preOrderTraverse(root, action) {
   }
 }
 
-function midpreOrderTraverse(root, action) {
+function inOrderTraverse(root, action) {
   if (root) {
     preOrderTraverse(root.left, action)
     action(root.val)
@@ -325,10 +325,37 @@ function midpreOrderTraverse(root, action) {
   }
 }
 
-function postpreOrderTraverse(root, action) {
+function postOrderTraverse(root, action) {
   if (root) {
     preOrderTraverse(root.left, action)
     preOrderTraverse(root.right, action)
     action(root.val)
   }
+}
+
+function insertIntoBST(root, val) {
+  if (!root) {
+    let node = createTreeNode(val)
+    return node
+  } else {
+    if (val < root.val) {
+      root.left = insertIntoBST(root.left, val)
+    } else {
+      root.right = insertIntoBST(root.right, val)
+    }
+  }
+  return root
+}
+
+function bstSort(ary) {
+  let bst = null
+  for (let i = 0; i < ary.length; i++) {
+    bst = insertIntoBST(bst, ary[i])
+  }
+  
+  i = 0
+  inOrderTraverse(bst, val => {
+    ary[i++] = val
+  })
+  return ary
 }
