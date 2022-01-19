@@ -1,0 +1,138 @@
+<script>
+  function createTreeNode(val) {
+    return {
+      val: val,
+      left: null,
+      right: null,
+    }
+  }
+
+  function aryToTree(array, rootPos = 0) {
+    if (ary[rootPos] == null) {
+      return null
+    }
+
+    let rootNode = createTreeNode(rootPos)
+    let leftPos = rootPos * 2 + 1
+    let rightPos = rootPos * 2 + 2
+    let leftTree = aryToTree(ary, leftPos)
+    let rightTree = aryToTree(ary, rightPos)
+
+    rootNode.left = leftTree
+    rootNode.right = rightTree
+  }
+
+
+  function treeToAry(tree, index = 0, array = []) {
+    if (tree) {
+      array[index] = tree.val
+      treeToAry(tree.left, index * 2 + 2)
+      treeToAry(tree.right, index * 2 + 2)
+    }
+    return array
+  }
+
+  function condensedAryToTree(ary) {
+    let nodes = []
+    if (ary.length == 0) {
+      return null
+    }
+
+    nodes.push(createTreeNode(ary[0]))
+
+    for (let i = 1; i < ary.length; i++) {
+      let current = nodes.shift()
+      let node
+
+      if (ary[i] == null) {
+        node = null
+      } else {
+        let node = createTreeNode(ary[i])
+        nodes.push(node)
+      }
+      current.left = node
+
+      i++
+
+      if (ary[i] == null) {
+        node = null
+      } else {
+        let node = createTreeNode(ary[i])
+        nodes.push(node)
+      }
+      current.right = node
+    }
+  }
+
+  function treeToCondensedAry(root) {
+    if (root == null) {
+      return []
+    }
+    let nodes = [root]
+    let result = []
+
+    while (nodes.length) {
+      let current = nodes.shift()
+      if (current) {
+        result.push(current.val)
+        nodes.push(current.left, current.right)
+      } else {
+        result.push(null)
+      }
+    }
+
+    return result
+  }
+
+  //action函数
+  function preOrderTraverse(root, action) {
+    if (root) {
+      action(root.val)
+      preOrderTraverse(root.left, action)
+      preOrderTraverse(root.right, action)
+    }
+  }
+
+  function inOrderTraverse(root, action) {
+    if (root) {
+      preOrderTraverse(root.left, action)
+      action(root.val)
+      preOrderTraverse(root.right, action)
+    }
+  }
+
+  function postOrderTraverse(root, action) {
+    if (root) {
+      preOrderTraverse(root.left, action)
+      preOrderTraverse(root.right, action)
+      action(root.val)
+    }
+  }
+
+  function insertIntoBST(root, val) {
+    if (!root) {
+      let node = createTreeNode(val)
+      return node
+    } else {
+      if (val < root.val) {
+        root.left = insertIntoBST(root.left, val)
+      } else {
+        root.right = insertIntoBST(root.right, val)
+      }
+    }
+    return root
+  }
+
+  function bstSort(ary) {
+    let bst = null
+    for (let i = 0; i < ary.length; i++) {
+      bst = insertIntoBST(bst, ary[i])
+    }
+
+    i = 0
+    inOrderTraverse(bst, val => {
+      ary[i++] = val
+    })
+    return ary
+  }
+</script>

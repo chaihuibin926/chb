@@ -3,7 +3,7 @@ function checkspam(str) {
 
   return newstr.includes('viagra') || newstr.includes('xxx');
 }
-alert( checkspam('buy ViAgRA now') );
+alert(checkspam('buy ViAgRA now'));
 
 //输入数字求和
 function sumInput() {
@@ -26,14 +26,14 @@ function sumInput() {
   return sum;
 }
 
-alert( sumInput() );
+alert(sumInput());
 
 //最大子数组
 function getmaxsubsum(arr) {
   let maxsum = 0;
   let partialsum = 0;
 
-  for (let item of arr){
+  for (let item of arr) {
     partialsum += item;
     maxsum = Math.max(maxsum, partialsum);
     if (partialsum < 0) partialsum = 0;
@@ -42,7 +42,7 @@ function getmaxsubsum(arr) {
   return maxsum;
 }
 
-alert( getmaxsubsum([1,3,5,1,-3,-2,3]) )
+alert(getmaxsubsum([1, 3, 5, 1, -3, -2, 3]))
 
 // ax + by = c
 // dx + ey = f
@@ -67,7 +67,7 @@ function mergeSort(ary) {
   let i = 0
   let j = 0
   let k = 0
-  while(i < left.length && j < right.length) {
+  while (i < left.length && j < right.length) {
     if (left[i] >= right[j]) {
       ary[k++] = right[j++]
     } else {
@@ -104,7 +104,7 @@ function arrToList(array) {
 
 
 function bind(f, ...fixedArgs) {
-  return function(...args) {
+  return function (...args) {
     return f(...fixedArgs, ...args)
   }
 }
@@ -116,16 +116,16 @@ function swap(ary, i, j) {
 }
 
 //快排
-function quickSprt(ary, start=0, end=ary.length-1) {
+function quickSprt(ary, start = 0, end = ary.length - 1) {
   if (start >= end) {
     return ary
   }
 
-  let pivotIdx = Math.floor(Math.random() * (end - start +1) + start)
+  let pivotIdx = Math.floor(Math.random() * (end - start + 1) + start)
   let pivot = ary[pivotIdx]
 
   swap(ary, pivotIdx, end)
-  
+
   let i = start
   for (let j = start; j < end; j++) {
     if (ary[i] < pivot) {
@@ -134,22 +134,22 @@ function quickSprt(ary, start=0, end=ary.length-1) {
   }
   swap(ary, i, end)
 
-  quickSprt(ary, start, i-1)
-  quickSprt(ary, i+1, end)
+  quickSprt(ary, start, i - 1)
+  quickSprt(ary, i + 1, end)
 
   return ary
 }
 
-function quickSprtBy(ary, predicate = it => it, start=0, end=ary.length-1) {
+function quickSprtBy(ary, predicate = it => it, start = 0, end = ary.length - 1) {
   if (start >= end) {
     return ary
   }
 
-  let pivotIdx = Math.floor(Math.random() * (end - start +1) + start)
+  let pivotIdx = Math.floor(Math.random() * (end - start + 1) + start)
   let pivot = ary[pivotIdx]
 
   swap(ary, pivotIdx, end)
-  
+
   let i = start
   for (let j = start; j < end; j++) {
     if (predicate(ary[i]) < predicate(pivot)) {
@@ -158,22 +158,22 @@ function quickSprtBy(ary, predicate = it => it, start=0, end=ary.length-1) {
   }
   swap(ary, i, end)
 
-  quickSprtBy(ary, predicate, start, i-1)
-  quickSprtBy(ary, predicate, i+1, end)
+  quickSprtBy(ary, predicate, start, i - 1)
+  quickSprtBy(ary, predicate, i + 1, end)
 
   return ary
 }
 
-function quickSprtWith(ary, compare = (a, b) => a-b, start=0, end=ary.length-1) {
+function quickSprtWith(ary, compare = (a, b) => a - b, start = 0, end = ary.length - 1) {
   if (start >= end) {
     return ary
   }
 
-  let pivotIdx = Math.floor(Math.random() * (end - start +1) + start)
+  let pivotIdx = Math.floor(Math.random() * (end - start + 1) + start)
   let pivot = ary[pivotIdx]
 
   swap(ary, pivotIdx, end)
-  
+
   let i = start
   for (let j = start; j < end; j++) {
     if (compare(ary[j], pivot) < 0) {
@@ -182,8 +182,8 @@ function quickSprtWith(ary, compare = (a, b) => a-b, start=0, end=ary.length-1) 
   }
   swap(ary, i, end)
 
-  quickSprtWith(ary, predicate, start, i-1)
-  quickSprtWith(ary, predicate, i+1, end)
+  quickSprtWith(ary, predicate, start, i - 1)
+  quickSprtWith(ary, predicate, i + 1, end)
 
   return ary
 }
@@ -217,145 +217,13 @@ function some(ary, predicare) {
 
 //反函数
 function invert(f) {
-  return function(...args) {
+  return function (...args) {
     return !f(...args)
   }
 }
 
-
-function createTreeNode(val) {
-  return {
-    val: val,
-    left: null,
-    right: null,
+class Rabbit {
+  constructor(xxx) {
+    this.xxx = xxx;
   }
-}
-
-function aryToTree(array, rootPos = 0) {
-  if (ary[rootPos] == null) {
-    return null
-  }
-
-  let rootNode = createTreeNode(rootPos)
-  let leftPos = rootPos * 2 + 1
-  let rightPos = rootPos * 2 + 2
-  let leftTree = aryToTree(ary, leftPos)
-  let rightTree = aryToTree(ary, rightPos)
-
-  rootNode.left = leftTree 
-  rootNode.right = rightTree
-}
-
-
-function treeToAry(tree, index = 0, array = []) {
-  if (tree) {
-    array[index] = tree.val
-    treeToAry(tree.left, index * 2 + 2)
-    treeToAry(tree.right, index * 2 + 2)
-  }
-  return array
-}
-
-function condensedAryToTree(ary) {
-  let nodes = []
-  if (ary.length == 0) {
-    return null
-  }
-
-  nodes.push(createTreeNode(ary[0]))
-
-  for (let i = 1; i < ary.length; i++) {
-    let current = nodes.shift()
-    let node
-
-    if(ary[i] == null) {
-      node = null
-    } else {
-      let node = createTreeNode(ary[i])
-      nodes.push(node)
-    }
-    current.left = node
-
-    i++
-
-    if (ary[i] == null) {
-      node = null
-    } else {
-      let node = createTreeNode(ary[i])
-      nodes.push(node)
-    }
-    current.right = node
-  }
-}
-
-function treeToCondensedAry(root) {
-  if (root == null) {
-    return []
-  }
-  let nodes = [root]
-  let result = []
-
-  while (nodes.length) {
-    let current = nodes.shift()
-    if (current) {
-      result.push(current.val)
-      nodes.push(current.left, current.right)
-    } else {
-      result.push(null)
-    }
-  }
-
-  return result
-}
-
-//action函数
-function preOrderTraverse(root, action) {
-  if (root) {
-    action(root.val)
-    preOrderTraverse(root.left, action)
-    preOrderTraverse(root.right, action)
-  }
-}
-
-function inOrderTraverse(root, action) {
-  if (root) {
-    preOrderTraverse(root.left, action)
-    action(root.val)
-    preOrderTraverse(root.right, action)
-  }
-}
-
-function postOrderTraverse(root, action) {
-  if (root) {
-    preOrderTraverse(root.left, action)
-    preOrderTraverse(root.right, action)
-    action(root.val)
-  }
-}
-
-function insertIntoBST(root, val) {
-  if (!root) {
-    let node = createTreeNode(val)
-    return node
-  } else {
-    if (val < root.val) {
-      root.left = insertIntoBST(root.left, val)
-    } else {
-      root.right = insertIntoBST(root.right, val)
-    }
-  }
-  return root
-}
-
-function bstSort(ary) {
-  let bst = null
-  for (let i = 0; i < ary.length; i++) {
-    bst = insertIntoBST(bst, ary[i])
-  }
-  
-  i = 0
-  inOrderTraverse(bst, val => {
-    ary[i++] = val
-  })
-  return ary
 }
