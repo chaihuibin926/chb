@@ -1,0 +1,121 @@
+<script>
+  //向量构造函数
+  function Vector(x, y) {
+    this.x = x
+    this.y = y
+  }
+
+  Vector.prototype.plus = function(vector) {
+    let result = new Vector()
+    result.x = this.x + vector.x   
+    result.y = this.y + vector.y
+    return result   
+  }
+
+  Vector.prototype.sub = function(vector) {
+    let result = new Vector()
+    result.x = this.x - vector.x   
+    result.y = this.y - vector.y
+    return result  
+  }
+
+  Vector.prototype.mult = function(vector) {
+    return this.x * vector.x + this.y * vector.y
+  }
+
+  Vector.prototype.getlength = function() {
+    return Math.sqrt(this.x * this.x + this.y * this.y)
+  }
+
+
+
+  //复数构造函数
+  function Plural(real, imaginary) {
+    this.real = real
+    this.imaginary = imaginary
+    if (this.imaginary > 0) {
+      this.compound = `${real} + ${imaginary}i`
+    } else if (this.imaginary < 0) {
+      this.compound = `${real} - ${-imaginary}i`
+    } else {
+      this.compound = `${real}`
+    }
+  }
+
+  Plural.prototype.plus = function(plural) {
+    let real = this.real + plural.real
+    let imaginary = this.imaginary + plural.imaginary
+    let result = new Plural(real, imaginary)
+    return result
+  }
+
+  Plural.prototype.sub = function(plural) {
+    let real = this.real - plural.real
+    let imaginary = this.imaginary - plural.imaginary
+    let result = new Plural(real, imaginary)
+    return result
+  }
+
+  Plural.prototype.mult = function(plural) {
+    let real = this.real * plural.real - this.imaginary * plural.imaginary
+    let imaginary = this.imaginary * plural.real + this.real * plural.imaginary
+    let result = new Plural(real, imaginary)
+    return result
+  }
+
+  Plural.prototype.remove = function(plural) {
+    let real = (this.real * plural.real + this.imaginary * plural.imaginary) / (plural.real * plural.real + plural.imaginary * plural.imaginary)
+    let imaginary = (this.imaginary * plural.real - this.real * plural.imaginary) / (plural.real * plural.real + plural.imaginary * plural.imaginary)
+    let result = new Plural(real, imaginary)
+    return result
+  }
+
+
+  //Set构造函数
+  function Myset() {
+    this.set = []
+    Object.defineProperty(this, 'size', {
+    get() {
+      return this.set.length
+    }
+  })
+  }
+  
+  Myset.prototype.add = function(value) {
+    let has = this.has(value)
+    if (!has) {
+      this.set.push(value)
+    }
+    return this.set
+  }
+
+  Myset.prototype.delete = function(value) {
+    let has = this.has(value)
+    for (let i = 0; i < this.set.length; i++) {
+      if (this.set[i] == value) {
+        this.set.splice(i, 1)
+      }
+      return has
+    }
+  }
+
+  Myset.prototype.has = function(value) {
+    for (let i = 0; i < this.set.length; i++) {
+      if (this.set[i] == value) {
+        return true
+      }
+    }
+    return false
+  }
+
+  Myset.prototype.clear = function() {
+    this.set = []
+    return this.set
+  }
+
+
+
+  function Mymap() {}
+
+  function Stack() {}
+</script>
