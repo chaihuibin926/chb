@@ -75,10 +75,10 @@
   function Myset() {
     this.set = []
     Object.defineProperty(this, 'size', {
-    get() {
-      return this.set.length
-    }
-  })
+      get() {
+        return this.set.length
+      }
+    })
   }
   
   Myset.prototype.add = function(value) {
@@ -116,6 +116,11 @@
 
 
   function Mymap() {}
+
+  Mymap.prototype.set = function(key, value) {
+    this[key] = value
+    return this
+  }
 
   function Stack() {}
 </script>
