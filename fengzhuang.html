@@ -72,13 +72,14 @@
 
 
   //Set构造函数
-  function Myset() {
+  function Myset(initial) {
     this.set = []
-    Object.defineProperty(this, 'size', {
-      get() {
-        return this.set.length
-      }
-    })
+
+    if (Array.isArray(initial)) {
+      initial.forEach(it => {
+        this.add(it)
+      })
+    }
   }
   
   Myset.prototype.add = function(value) {
@@ -113,14 +114,167 @@
     return this.set
   }
 
+  Object.defineProperty(Myset.prototype, 'size', {
+    get() {
+      return this.set.length
+    }
+  })
 
 
-  function Mymap() {}
+  //Map
+  function Mymap(initialPairs) {
+    this._mapKeys = []
+    this._mapVals = []
 
-  Mymap.prototype.set = function(key, value) {
-    this[key] = value
+    initialPairs.forEach(pair => {
+      let key = pair[0]
+      let val = pair[1]
+      this.set(key, val)
+    })
+  }
+
+  Mymap.prototype = {
+    set(key, val) {
+      if (_keyIdx(key) == -1) {
+        this._mapKeys.push(key)
+        this._mapVals.push(val)
+      } else {
+        this._mapVals[_keyIdx(key)] = val
+      }
+    },
+    _keyIdx(key) {
+      return this._mapKeys.indexOf(key)
+    },
+    get(key) {
+      if (_keyIdx(key) >= 0) {
+        return this._mapVals[_keyIdx(key)]
+      }
+    },
+    has(key) {
+      return (_keyIdx(key) >= 0) ? true : false
+    },
+    clear() {
+      this._mapKeys.length = 0
+      this._mapVals.length = 0
+    },
+    delete(key) {
+      if (_keyIdx(key) >= 0) {
+        this._mapKeys.splice(_keyIdx(key), 1)
+        this._mapVals.splice(_keyIdx(key), 1)
+      }
+    },
+    get size() {
+      return this._mapKeys.length
+    }
+  }
+
+
+
+
+  //栈
+  function Stack(initial = []) {
+    this.head = null
+    this._size = 0
+
+    initial.forEach(it => {
+      this.push(it)
+    })
+  }
+
+  Stack.prototype.push = function(value) {
+    let node = {
+      val: value,
+      next: this.head
+    }
+    this.head = node
+    this._size++
     return this
   }
 
-  function Stack() {}
+  Stack.prototype.pop = function() {
+    if (this.head) {
+      let val = this.head.value
+      this.head = this.head.next
+      this._size--
+      return val
+    }
+  }
+
+  Stack.prototype.peek = function() {
+    if (this.head) return this.head.value
+  }
+
+  Object.defineProperty(Stack.prototype, 'size', {
+    get () {
+      return this._size
+    }
+  })
+
+
+
+
+  //队列
+  function Queue(initials = []) {
+    this._head = null
+    this._tail = null
+    this._size = 0
+
+    initial.forEach(it => {
+      this.enqueue(it)
+    })
+  }
+
+  Queue.prototype.enqueue = function(val) {
+    let node = {
+      val,
+      next: null
+    }
+    if (this._head) {
+      this._tail.next = node
+      this._tail = node
+    } else {
+      this._head = this._tail = node
+    }
+    this._size++
+  }
+
+  Queue.prototype.dequeue = function() {
+    if (this._head) {
+      let val = this._head.val
+      this._head = this._head.next
+      if (this._head = null) {
+        this._tail = null
+      }
+      this._size--
+      return val
+    }
+  }
+
+  Queue.prototype.peek = function() {
+    if (this._head) {
+      return this.head.val
+    }
+  }
+
+  Object.defineProperty(Queue.prototype, 'size', {
+    get() {
+      return this.size
+    }
+  })
+
+
+
+  class Stack2 {
+    // # 私有属性
+    #head = null
+    #size = 0
+    constructor(initial = []) {
+      this.head = null
+      this._size = 0
+
+      initial.forEach(it => {
+        this.push(it)
+      })
+    }
+  }
 </script>
