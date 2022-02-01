@@ -170,6 +170,19 @@
 
 
 
+  class Stack2 {
+    // # 私有属性
+    #head = null
+    #size = 0
+    constructor(initial = []) {
+      this.head = null
+      this._size = 0
+
+      initial.forEach(it => {
+        this.push(it)
+      })
+    }
+  }
 
   //栈
   function Stack(initial = []) {
@@ -264,17 +277,125 @@
 
 
 
-  class Stack2 {
-    // # 私有属性
-    #head = null
-    #size = 0
-    constructor(initial = []) {
-      this.head = null
-      this._size = 0
 
-      initial.forEach(it => {
-        this.push(it)
-      })
+
+
+//堆
+  class PriorityQueue {
+    constructor() {
+      this.elements = []
     }
+
+    #swap(i, j) {
+      let temp = this.elements[i]
+      this.elements[i] = this.elements[j]
+      this.elements[j] = temp
+    }
+
+    push(val) {
+      let idx = this.elements.push(val) - 1
+      while (idx > 0) {
+        let pIdx = (idx - 1) >> 1
+        if (this.elements[idx] > this.elements[pIdx]) {
+          this.#swap(idx, pIdx)
+        }
+        idx = pIdx 
+      }
+      return this
+    }
+
+    pop() {
+      if (this.elements.length == 1) {
+        return this.elements.pop()
+      }
+      if (this.elements.length > 1) {
+        let result = this.elements[0]
+        this.elements[0] = this.elements.pop()
+        this.heapDown(0)
+        return result
+      }
+    }
+
+    heapDown(idx) {
+      while (true) {
+        let maxIdx = idx
+        let leftIdx = idx * 2 + 1
+        if (leftIdx < this.elements.length && this.elements[leftIdx] > this.elements[maxIdx]) {
+          maxIdx = leftIdx
+        }
+        let rightIdx = leftIdx + 1
+        if (rightIdx < this.elements.length && this.elements[rightIdx] > this.elements[maxIdx]) {
+          maxIdx = rightIdx
+        }
+        if (maxIdx !== idx) {
+          this.#swap(maxIdx, idx)
+          idx = maxIdx
+        } else {
+          return 
+        }
+      }
+    }
+ 
+    peek() {
+      return this.elements[0]
+    }
+  }
+
+  //堆排序
+  function sortByHeap(ary) {
+    let pq = new PriorityQueue()
+    for (let i = 0; i < ary.length; i++) {
+      pq.push(ary[i])
+    }
+    for (let j = 0; j < ary.length; j++) {
+      ary[j] = pq.pop()
+    }
+    return ary
+  }
+
+  //就地堆排序
+  function heapSort(ary) {
+    heapify(ary)
+    for (let i = ary.length - 1; i > 0; i--) {
+      swap(ary, 0, i)
+      heapDown(ary, 0, i)
+    }
+    return ary
+  }
+
+  function heapDown(ary, idx, stopIdx = ary.length) {
+    while (true) {
+      let maxIdx = idx
+      let leftIdx = idx * 2 + 1
+      if (leftIdx < stopIdx && ary[leftIdx] > ary[maxIdx]) {
+        maxIdx = leftIdx
+      }
+      let rightIdx = leftIdx + 1
+      if (rightIdx < stopIdx && ary[rightIdx] > ary[maxIdx]) {
+        maxIdx = rightIdx
+      }
+      if (maxIdx !== idx) {
+        swap(ary, maxIdx, idx)
+        idx = maxIdx
+      } else {
+        return
+      }
+    }
+  }
+//将数组堆化
+  function heapify(ary) {
+    let startIdx = (ary.length - 1) >> 1
+    for (let i = startIdx; i >= 0; i--) {
+      heapDown(ary, i)
+    }
+    return ary
+  }
+
+  
+
+  function swap(ary, i, j) {
+    let temp = ary[i]
+    ary[i] = ary[j]
+    ary[j] = temp
   }
 </script>
