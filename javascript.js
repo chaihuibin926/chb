@@ -56,7 +56,7 @@ alert(getmaxsubsum([1, 3, 5, 1, -3, -2, 3]))
 
 // d * (c - b * y) + e * y = f
 
-//合并排列
+//合并排列 归并排序
 function mergeSort(ary) {
   if (ary.length < 2) return ary
   let mid = ary.length >> 1
