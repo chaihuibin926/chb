@@ -71,7 +71,7 @@ function mergeSort(ary) {
     if (left[i] >= right[j]) {
       ary[k++] = right[j++]
     } else {
-      ary[k++] = left[j++]
+      ary[k++] = left[i++]
     }
   }
   while (i < left.length) {
