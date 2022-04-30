@@ -68,7 +68,7 @@ function mergeSort(ary) {
   let j = 0
   let k = 0
   while (i < left.length && j < right.length) {
-    if (left[i] >= right[j]) {
+    if (left[i] > right[j]) {
       ary[k++] = right[j++]
     } else {
       ary[k++] = left[i++]
@@ -77,8 +77,8 @@ function mergeSort(ary) {
   while (i < left.length) {
     ary[k++] = left[i++]
   }
-  while (i < right.length) {
-    ary[k++] = right[i++]
+  while (j < right.length) {
+    ary[k++] = right[j++]
   }
   return ary
 }
